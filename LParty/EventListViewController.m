@@ -21,23 +21,39 @@
     [super viewDidLoad];
 }
 
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [dateSectionTitles count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [dateSectionTitles objectAtIndex:section];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"numb = %lu",(unsigned long)[self.eventNameList count]);
-    return [self.eventNameList count];
+    NSString *sectionTitle = [dateSectionTitles objectAtIndex:section];
+    NSArray *listEvent = [calendar objectForKey:sectionTitle];
+    return [listEvent count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"Cell";
     EventListCell *cell = (EventListCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
     if (cell == nil) {
         cell = [[EventListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
-    NSString *hostDetail = [NSString stringWithFormat:@"by %@",[self.eventHostDetailList objectAtIndex:indexPath.row]];
     
-    cell.title.text = [self.eventNameList objectAtIndex:indexPath.row];
+    NSString *hostDetail = [NSString stringWithFormat:@"by %@",[self.eventHostDetailList objectAtIndex:indexPath.row]];
     cell.detail.text = hostDetail;
+    NSString *sectionTitle = [dateSectionTitles objectAtIndex:indexPath.section];
+    NSArray *listEvent = [calendar objectForKey:sectionTitle];
+    NSString *event = [listEvent objectAtIndex:indexPath.row];
+    cell.title.text = event;
     
     return cell;
 }
@@ -53,12 +69,13 @@
     NSLog(@"Create data");
     
     //crate calendar here
-    calendar = @{@"date" : @[],
-                 @"date" : @[],
-                 @"date" : @[],
-                 @"date" : @[],
-                 @"date" : @[]};
+    calendar = @{@"Monday, Jan 11" : @[@"We Talk and Drink", @"Drink only", @"Dance with girl"],
+                 @"Tuesday, Jan 12" : @[@"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev"],
+                 @"Wednesday, Jan 13" : @[@"We Talk and Drink", @"Drink only"],
+                 @"Thursday, Jan 14" : @[@"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev"],
+                 @"Friday, Jan 15" : @[@"For men only", @"Drink a tea", @"We Talk and Drink", @"Drink only", @"Dance with girl"]};
     
+    dateSectionTitles = [calendar allKeys];
     
     self.eventNameList = [[NSMutableArray alloc] initWithObjects:@"We Talk and Drink", @"Drink only", @"Dance with girl", @"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev", nil];
     self.eventHostDetailList = [[NSMutableArray alloc] initWithObjects:@"John Frick @Bar21", @"Michel Moneal @sukhumvit77House", @"Shever @BarJJ", @"Bilgate @microsoft", @"John Frick @Bar21", @"Michel Moneal @sukhumvit77House", @"Shever @BarJJ", @"Bilgate @microsoft", nil];

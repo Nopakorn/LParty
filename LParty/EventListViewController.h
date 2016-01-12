@@ -12,6 +12,7 @@
 @interface EventListViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
 {
     NSDictionary *calendar;
+    NSArray *dateSectionTitles;
 }
 @property (nonatomic) NSMutableArray *eventNameList;
 @property (nonatomic) NSMutableArray *eventDate;
