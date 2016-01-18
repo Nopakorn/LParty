@@ -13,7 +13,7 @@
 
 - (void)viewDidLoad
 {
-//    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:NO];
     [self createEventData];
 //    self.eventListTableView.dataSource = self;
 //    self.eventListTableView.delegate = self;
@@ -50,13 +50,20 @@
     }
     
     NSString *hostDetail = [NSString stringWithFormat:@"by %@",[self.eventHostDetailList objectAtIndex:indexPath.row]];
-    cell.detail.text = hostDetail;
+    cell.host.text = hostDetail;
     NSString *sectionTitle = [dateSectionTitles objectAtIndex:indexPath.section];
     NSArray *listEvent = [calendar objectForKey:sectionTitle];
     NSString *event = [listEvent objectAtIndex:indexPath.row];
     cell.title.text = event;
+    cell.time.text = @"12:30pm";
+    cell.imageChecker.hidden = true;
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

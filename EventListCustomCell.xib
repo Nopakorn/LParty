@@ -65,7 +65,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="detail" destination="0a5-EW-kWk" id="arI-5P-git"/>
+                <outlet property="host" destination="0a5-EW-kWk" id="mbN-MF-9bB"/>
+                <outlet property="imageChecker" destination="Dge-a9-gDe" id="eCg-Do-d70"/>
+                <outlet property="time" destination="goY-Q3-W18" id="dSv-0d-QdY"/>
                 <outlet property="title" destination="Yne-YM-brB" id="Srp-26-g8U"/>
             </connections>
             <point key="canvasLocation" x="344" y="231"/>

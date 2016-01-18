@@ -11,7 +11,11 @@
 @implementation EventListCell
 
 @synthesize title = _title;
-@synthesize detail = _detail;
+@synthesize host = _host;
+@synthesize time = _time;
+@synthesize imageChecker = _imageChecker;
+
+
 
 -(void)layoutSubviews
 {
