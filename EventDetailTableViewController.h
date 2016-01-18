@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Event.h"
 @interface EventDetailTableViewController : UITableViewController
 
-
+@property (strong, nonatomic) Event *event;
 @property(weak, nonatomic) IBOutlet UITableView *eventDetailTableView;
 
 @end

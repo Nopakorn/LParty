@@ -22,6 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.eventDetailTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    NSLog(@"check data in EventDetailTableViewController////////////////////////////////////////////////////////////");
+    [self.event checkData];
+    
     //self.eventDetailTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -65,7 +68,7 @@
                 cell = [nib objectAtIndex:0];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.title.text = @"Title";
+            cell.title.text = self.event.name;
             returnCell = cell;
         }
             break;
@@ -78,8 +81,8 @@
                 cell = [nib objectAtIndex:0];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.time.text = @"15:00 to 16:00";
-            cell.date.text = @"14 jan 2016";
+            cell.time.text = self.event.time;
+            cell.date.text = self.event.date;
             
             returnCell = cell;
         }
@@ -93,8 +96,8 @@
                 cell = [nib objectAtIndex:0];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.host.text = @"@Muse Thonglor";
-            cell.locationDetail.text = @"159/8 Soi Sukhumvit 10 , Sukhumvit 55 , Klongtannua , Watthana, Bangkok 10110.";
+            cell.host.text = self.event.host.name;
+            cell.locationDetail.text = self.event.location;
             
             returnCell = cell;
         }
@@ -108,7 +111,7 @@
                 cell = [nib objectAtIndex:0];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.information.text = @"This is an area for describe others what is about your party !";
+            cell.information.text = self.event.infomation;
             
             returnCell = cell;
         }

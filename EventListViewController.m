@@ -7,16 +7,26 @@
 //
 
 #import "EventListViewController.h"
+#import "EventDetailViewController.h"
 #import "EventListCell.h"
 
 @implementation EventListViewController
 
+- (id)init
+{
+    if(self = [super init])
+    {
+        self.chacker = false;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
-    [self.navigationController setNavigationBarHidden:NO];
+//    [self.navigationController setNavigationBarHidden:NO];
+    self.eventList = [[NSMutableArray alloc] initWithCapacity:10];
     [self createEventData];
-//    self.eventListTableView.dataSource = self;
-//    self.eventListTableView.delegate = self;
+    
     self.eventListTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [super viewDidLoad];
 }
@@ -29,14 +39,16 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    
     return [dateSectionTitles objectAtIndex:section];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString *sectionTitle = [dateSectionTitles objectAtIndex:section];
-    NSArray *listEvent = [calendar objectForKey:sectionTitle];
-    return [listEvent count];
+//    NSString *sectionTitle = [dateSectionTitles objectAtIndex:section];
+//    NSArray *listEvent = [calendar objectForKey:sectionTitle];
+//    return [listEvent count];
+    return [self.eventList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -49,15 +61,21 @@
         cell = [nib objectAtIndex:0];
     }
     
-    NSString *hostDetail = [NSString stringWithFormat:@"by %@",[self.eventHostDetailList objectAtIndex:indexPath.row]];
-    cell.host.text = hostDetail;
-    NSString *sectionTitle = [dateSectionTitles objectAtIndex:indexPath.section];
-    NSArray *listEvent = [calendar objectForKey:sectionTitle];
-    NSString *event = [listEvent objectAtIndex:indexPath.row];
-    cell.title.text = event;
-    cell.time.text = @"12:30pm";
-    cell.imageChecker.hidden = true;
+    Event *eventObj = [self.eventList objectAtIndex:indexPath.row];
+    NSString *hostDetail = [NSString stringWithFormat:@"by %@",eventObj.host.name];
     
+    cell.host.text = hostDetail;
+//    NSString *sectionTitle = [dateSectionTitles objectAtIndex:indexPath.section];
+//    NSArray *listEvent = [calendar objectForKey:sectionTitle];
+//    NSString *event = [listEvent objectAtIndex:indexPath.row];
+    cell.title.text = eventObj.name;
+    cell.time.text = eventObj.time;
+    if (self.chacker) {
+        cell.imageChecker.hidden = false;
+    }else{
+        cell.imageChecker.hidden = true;
+    }
+        
     return cell;
 }
 
@@ -69,11 +87,16 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    //implement push here!
+    if([[segue identifier]isEqualToString:@"showInformation" ])
+    {
+        EventDetailViewController *dest = [segue destinationViewController];
+        dest.event = self.eventSelected;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.eventSelected = [self.eventList objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"showInformation" sender:self];
     [self.eventListTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -82,19 +105,25 @@
 {
     NSLog(@"Create data");
     //crate calendar here
-    calendar = @{@"Monday, Jan 11" : @[@"We Talk and Drink", @"Drink only", @"Dance with girl"],
-                 @"Tuesday, Jan 12" : @[@"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev"],
-                 @"Wednesday, Jan 13" : @[@"We Talk and Drink", @"Drink only"],
-                 @"Thursday, Jan 14" : @[@"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev"],
-                 @"Friday, Jan 15" : @[@"For men only", @"Drink a tea", @"We Talk and Drink", @"Drink only", @"Dance with girl"]};
-    
-    dateSectionTitles = [calendar allKeys];
+  
+    dateSectionTitles = [[NSArray alloc] initWithObjects:@"Monday, Jan 11", @"Tuesday, Jan 12",  @"Wednesday, Jan 13", @"Thursday, Jan 14", @"Friday, Jan 15", nil];
     
     self.eventNameList = [[NSMutableArray alloc] initWithObjects:@"We Talk and Drink", @"Drink only", @"Dance with girl", @"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev", nil];
     self.eventHostDetailList = [[NSMutableArray alloc] initWithObjects:@"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@inthebox", @"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@mimemo", nil];
     
     NSLog(@"count = %lu",(unsigned long)[self.eventNameList count]);
     //[self.eventListTableView reloadData];
+    
+    for (int i = 0; i < [self.eventHostDetailList count]; i++) {
+        self.host = [[Host alloc] initWithName:[self.eventHostDetailList objectAtIndex:i] andDetail:nil];
+        self.event = [[Event alloc] initWithHost:self.host nameEvent:[self.eventNameList objectAtIndex:i]andAmoutOfMember:10];
+        [self.eventList addObject:self.event];
+    }
+    
+    for (Event* x in self.eventList) {
+        [x checkData];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "Member.h"
+#import "Host.h"
 
 @interface EventListViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
 {
@@ -18,8 +20,15 @@
 @property (nonatomic) NSMutableArray *eventDate;
 @property (nonatomic) NSMutableArray *eventLocation;
 @property (nonatomic) NSMutableArray *eventHostDetailList;
+@property (nonatomic) BOOL* chacker;
+
 
 @property (strong, nonatomic) Event *event;
+@property (strong, nonatomic) Event *eventSelected;
+@property (strong, nonatomic) Host *host;
+@property (strong, nonatomic) Member *member;
+@property (nonatomic, retain) NSMutableArray *eventList;
+
 @property(weak, nonatomic) IBOutlet UITableView *eventListTableView;
 
 @end
