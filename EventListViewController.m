@@ -74,6 +74,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self performSegueWithIdentifier:@"showInformation" sender:self];
     [self.eventListTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -90,7 +91,7 @@
     dateSectionTitles = [calendar allKeys];
     
     self.eventNameList = [[NSMutableArray alloc] initWithObjects:@"We Talk and Drink", @"Drink only", @"Dance with girl", @"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev", nil];
-    self.eventHostDetailList = [[NSMutableArray alloc] initWithObjects:@"John Frick @Bar21", @"Michel Moneal @sukhumvit77House", @"Shever @BarJJ", @"Bilgate @microsoft", @"John Frick @Bar21", @"Michel Moneal @sukhumvit77House", @"Shever @BarJJ", @"Bilgate @microsoft", nil];
+    self.eventHostDetailList = [[NSMutableArray alloc] initWithObjects:@"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@inthebox", @"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@mimemo", nil];
     
     NSLog(@"count = %lu",(unsigned long)[self.eventNameList count]);
     //[self.eventListTableView reloadData];

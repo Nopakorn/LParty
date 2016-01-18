@@ -10,6 +10,8 @@
 #import "InfoCustomCell.h"
 #import "DateTimeCustomCell.h"
 #import "ImageViewCustomCell.h"
+#import "MapInfoCustomCell.h"
+//#import "GoingCustomCell.h"
 
 @interface EventDetailTableViewController ()
 
@@ -44,7 +46,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 3;
+    return 4;
 }
 
 
@@ -63,7 +65,7 @@
                 cell = [nib objectAtIndex:0];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.title.text = @"Test Title";
+            cell.title.text = @"Title";
             returnCell = cell;
         }
             break;
@@ -77,12 +79,27 @@
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             cell.time.text = @"15:00 to 16:00";
-            cell.date.text = @"14 jan";
+            cell.date.text = @"14 jan 2016";
             
             returnCell = cell;
         }
             break;
         case 2:
+        {
+            cellIdentifier = @"MapInfoCustomCell";
+            MapInfoCustomCell *cell = (MapInfoCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if(cell == nil){
+                NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"MapInfoCustomCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.host.text = @"@Muse Thonglor";
+            cell.locationDetail.text = @"159/8 Soi Sukhumvit 10 , Sukhumvit 55 , Klongtannua , Watthana, Bangkok 10110.";
+            
+            returnCell = cell;
+        }
+            break;
+        case 3:
         {
             cellIdentifier = @"InfoCustomCell";
             InfoCustomCell *cell = (InfoCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -106,13 +123,13 @@
         
         return 177;
         
-    }else if(indexPath.row == 2){
+    }else if(indexPath.row == 3){
     
         return 249;
     
     }else{
         
-        return 44;
+        return 70;
     }
 }
 /*

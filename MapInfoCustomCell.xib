@@ -8,24 +8,35 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="IDg-Ck-DIq">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MapInfoCustomCell" rowHeight="77" id="IDg-Ck-DIq" customClass="MapInfoCustomCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IDg-Ck-DIq" id="np5-SS-2zh">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="76"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xfB-1i-0my">
-                        <rect key="frame" x="16" y="16" width="50" height="50"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xfB-1i-0my">
+                        <rect key="frame" x="16" y="16" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="0Ez-dg-eO1"/>
-                            <constraint firstAttribute="height" constant="50" id="QPq-sU-O6l"/>
+                            <constraint firstAttribute="width" constant="30" id="0Ez-dg-eO1"/>
+                            <constraint firstAttribute="height" constant="30" id="QPq-sU-O6l"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTy-Rz-U1f">
-                        <rect key="frame" x="74" y="27" width="293" height="21"/>
+                        <rect key="frame" x="54" y="43" width="280" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="293" id="rr0-Ud-itr"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="quo-yG-qpp"/>
+                            <constraint firstAttribute="width" constant="280" id="rr0-Ud-itr"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="280" id="uPa-XA-DWn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <color key="textColor" red="0.27668907120000003" green="0.27668907120000003" blue="0.27668907120000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1x-If-nNi">
+                        <rect key="frame" x="54" y="14" width="280" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="280" id="6lY-Kj-bfM"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -33,14 +44,39 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mTy-Rz-U1f" firstAttribute="trailing" secondItem="np5-SS-2zh" secondAttribute="trailingMargin" id="1Um-FA-iQr"/>
+                    <constraint firstItem="mTy-Rz-U1f" firstAttribute="trailing" secondItem="np5-SS-2zh" secondAttribute="trailingMargin" constant="-8" id="1Um-FA-iQr"/>
                     <constraint firstItem="xfB-1i-0my" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="8" id="2gM-2h-a0M"/>
+                    <constraint firstItem="s1x-If-nNi" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="6" id="74V-SY-J6Y"/>
+                    <constraint firstItem="mTy-Rz-U1f" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="AGd-8O-wwO"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="mTy-Rz-U1f" secondAttribute="trailing" constant="13" id="FCi-lw-kq5"/>
                     <constraint firstItem="xfB-1i-0my" firstAttribute="leading" secondItem="np5-SS-2zh" secondAttribute="leadingMargin" constant="8" id="K98-Lc-coc"/>
-                    <constraint firstItem="mTy-Rz-U1f" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="19" id="R8z-Nd-oA7"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="s1x-If-nNi" secondAttribute="trailing" constant="19" id="M3E-KP-oYt"/>
+                    <constraint firstItem="mTy-Rz-U1f" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="35" id="R8z-Nd-oA7"/>
+                    <constraint firstItem="s1x-If-nNi" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="gX5-6f-21U"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="s1x-If-nNi" secondAttribute="trailing" constant="19" id="k5J-CH-JXp"/>
+                    <constraint firstItem="s1x-If-nNi" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="w20-0c-K3g"/>
                     <constraint firstItem="mTy-Rz-U1f" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="zh4-g5-wbz"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="M3E-KP-oYt"/>
+                        <exclude reference="gX5-6f-21U"/>
+                        <exclude reference="k5J-CH-JXp"/>
+                        <exclude reference="1Um-FA-iQr"/>
+                        <exclude reference="FCi-lw-kq5"/>
+                        <exclude reference="zh4-g5-wbz"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="host" destination="s1x-If-nNi" id="lfu-ef-rBT"/>
+                <outlet property="locationDetail" destination="mTy-Rz-U1f" id="E5l-8L-tyh"/>
+                <outlet property="mapIcon" destination="xfB-1i-0my" id="6CF-m2-l8L"/>
+            </connections>
             <point key="canvasLocation" x="317.5" y="224.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="MapIcon.png" width="41" height="49"/>
+    </resources>
 </document>
