@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InfoCustomCell" rowHeight="249" id="XXw-mh-b97" customClass="InfoCustomCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="249"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XXw-mh-b97" id="RUo-db-d4P">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="248"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="information" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNm-8A-zfw">
+                        <rect key="frame" x="16" y="16" width="351" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="1ig-p2-3aw"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="4Jt-Da-47w"/>
+                            <constraint firstAttribute="width" constant="351" id="L4s-P1-4zO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="awP-Wu-iPw">
+                        <rect key="frame" x="16" y="124" width="351" height="50"/>
+                        <color key="backgroundColor" red="0.98785482186537521" green="0.39468088494307346" blue="0.50119387351068678" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="351" id="P6w-eZ-yUC"/>
+                            <constraint firstAttribute="height" constant="50" id="fel-FN-MJj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <color key="tintColor" red="0.98785482186537521" green="0.97283659568180803" blue="0.95928027916151448" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="Join">
+                            <color key="titleColor" red="0.98668197811790093" green="0.96398161815557437" blue="0.98785482186537521" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXN-RL-lvq">
+                        <rect key="frame" x="16" y="182" width="351" height="50"/>
+                        <color key="backgroundColor" red="0.89348251319758676" green="0.86846116200770052" blue="0.89089208828510613" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="351" id="0Tp-hf-mTJ"/>
+                            <constraint firstAttribute="height" constant="50" id="4xc-fI-Zsn"/>
+                        </constraints>
+                        <color key="tintColor" red="0.97254901960784312" green="0.29411764705882354" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="Not Interested"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="rXN-RL-lvq" firstAttribute="top" secondItem="awP-Wu-iPw" secondAttribute="bottom" constant="8" id="3Cc-Kr-Myd"/>
+                    <constraint firstItem="dNm-8A-zfw" firstAttribute="top" secondItem="RUo-db-d4P" secondAttribute="topMargin" constant="8" id="KsY-5A-atP"/>
+                    <constraint firstItem="rXN-RL-lvq" firstAttribute="trailing" secondItem="RUo-db-d4P" secondAttribute="trailingMargin" constant="-8" id="TzZ-kw-uTB"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="rXN-RL-lvq" secondAttribute="bottom" constant="8" id="WGc-Lv-39X"/>
+                    <constraint firstItem="awP-Wu-iPw" firstAttribute="trailing" secondItem="RUo-db-d4P" secondAttribute="trailingMargin" constant="-8" id="ZBD-sD-24t"/>
+                    <constraint firstItem="awP-Wu-iPw" firstAttribute="top" secondItem="dNm-8A-zfw" secondAttribute="bottom" constant="8" id="dvD-Dk-8t0"/>
+                    <constraint firstItem="awP-Wu-iPw" firstAttribute="leading" secondItem="RUo-db-d4P" secondAttribute="leadingMargin" constant="8" id="eeX-vU-Jc2"/>
+                    <constraint firstItem="rXN-RL-lvq" firstAttribute="leading" secondItem="RUo-db-d4P" secondAttribute="leadingMargin" constant="8" id="f2A-0E-VyB"/>
+                    <constraint firstItem="dNm-8A-zfw" firstAttribute="leading" secondItem="RUo-db-d4P" secondAttribute="leadingMargin" constant="8" id="u8D-TZ-38q"/>
+                    <constraint firstItem="dNm-8A-zfw" firstAttribute="trailing" secondItem="RUo-db-d4P" secondAttribute="trailingMargin" constant="-8" id="wxp-gN-TOa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="information" destination="dNm-8A-zfw" id="6gM-az-Xr9"/>
+                <outlet property="joinButton" destination="awP-Wu-iPw" id="9eN-ww-jgk"/>
+                <outlet property="notJoinButton" destination="rXN-RL-lvq" id="U50-Qx-jH9"/>
+            </connections>
+            <point key="canvasLocation" x="316.5" y="283.5"/>
+        </tableViewCell>
+    </objects>
+</document>
