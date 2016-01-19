@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventDetailTableViewController.h"
 #import "Event.h"
 #import "Member.h"
 #import "Host.h"
 
-@interface EventListViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
+@interface EventListViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource,EventDetailViewControllerDelegate>
 {
     NSDictionary *calendar;
     NSArray *dateSectionTitles;
@@ -20,7 +21,7 @@
 @property (nonatomic) NSMutableArray *eventDate;
 @property (nonatomic) NSMutableArray *eventLocation;
 @property (nonatomic) NSMutableArray *eventHostDetailList;
-@property (nonatomic) BOOL* chacker;
+@property (nonatomic) Boolean checker;
 
 
 @property (strong, nonatomic) Event *event;

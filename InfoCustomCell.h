@@ -14,4 +14,6 @@
 @property(weak,nonatomic) IBOutlet UIButton  *joinButton;
 @property(weak,nonatomic) IBOutlet UIButton  *notJoinButton;
 
+- (IBAction)addCheckedMark:(id)sender;
+
 @end

@@ -14,17 +14,21 @@
 //#import "GoingCustomCell.h"
 
 @interface EventDetailTableViewController ()
-
+{
+    Boolean join;
+}
 @end
 
 @implementation EventDetailTableViewController
 
+@synthesize delegate = _delegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.eventDetailTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    NSLog(@"check data in EventDetailTableViewController////////////////////////////////////////////////////////////");
+  
     [self.event checkData];
-    
+    join = false;
     //self.eventDetailTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -113,6 +117,11 @@
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             cell.information.text = self.event.infomation;
             
+            cell.joinButton.tag = indexPath.row;
+            [cell.joinButton addTarget:self action:@selector(addCheckedMark:) forControlEvents:UIControlEventTouchUpInside];
+            if (join) {
+                cell.notJoinButton.hidden = true;
+            }
             returnCell = cell;
         }
             break;
@@ -124,16 +133,35 @@
 {
     if (indexPath.row == 0) {
         
-        return 177;
+        return 178;
         
     }else if(indexPath.row == 3){
-    
-        return 249;
+//        if(join){
+//            return 248-50;
+//        }else{
+//            return 248;
+//        }
+        return 248;
     
     }else{
         
         return 70;
     }
+}
+
+- (void)addCheckedMark:(id)sender
+{
+    if(join){
+        join = false;
+    }else{
+        join = true;
+    }
+    
+    NSLog(@"join check");
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.delegate addCheckPoint:self didFinishPressedButton:join];
 }
 /*
 // Override to support conditional editing of the table view.

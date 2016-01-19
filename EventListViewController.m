@@ -16,7 +16,7 @@
 {
     if(self = [super init])
     {
-        self.chacker = false;
+        self.checker = false;
     }
     return self;
 }
@@ -65,17 +65,14 @@
     NSString *hostDetail = [NSString stringWithFormat:@"by %@",eventObj.host.name];
     
     cell.host.text = hostDetail;
-//    NSString *sectionTitle = [dateSectionTitles objectAtIndex:indexPath.section];
-//    NSArray *listEvent = [calendar objectForKey:sectionTitle];
-//    NSString *event = [listEvent objectAtIndex:indexPath.row];
     cell.title.text = eventObj.name;
     cell.time.text = eventObj.time;
-    if (self.chacker) {
+    if (self.checker) {
         cell.imageChecker.hidden = false;
     }else{
         cell.imageChecker.hidden = true;
     }
-        
+    
     return cell;
 }
 
@@ -89,8 +86,9 @@
     
     if([[segue identifier]isEqualToString:@"showInformation" ])
     {
-        EventDetailViewController *dest = [segue destinationViewController];
+        EventDetailTableViewController *dest = [segue destinationViewController];
         dest.event = self.eventSelected;
+        dest.delegate = self;
     }
 }
 
@@ -111,9 +109,6 @@
     self.eventNameList = [[NSMutableArray alloc] initWithObjects:@"We Talk and Drink", @"Drink only", @"Dance with girl", @"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev", nil];
     self.eventHostDetailList = [[NSMutableArray alloc] initWithObjects:@"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@inthebox", @"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@mimemo", nil];
     
-    NSLog(@"count = %lu",(unsigned long)[self.eventNameList count]);
-    //[self.eventListTableView reloadData];
-    
     for (int i = 0; i < [self.eventHostDetailList count]; i++) {
         self.host = [[Host alloc] initWithName:[self.eventHostDetailList objectAtIndex:i] andDetail:nil];
         self.event = [[Event alloc] initWithHost:self.host nameEvent:[self.eventNameList objectAtIndex:i]andAmoutOfMember:10];
@@ -124,6 +119,11 @@
         [x checkData];
     }
     
+}
+- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean)join
+{
+    self.checker = join;
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
