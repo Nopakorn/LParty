@@ -16,12 +16,15 @@
 @interface EventDetailTableViewController ()
 {
     Boolean join;
+    Boolean notInterested;
 }
 @end
 
 @implementation EventDetailTableViewController
 
 @synthesize delegate = _delegate;
+@synthesize rowSelected = _rowSelected;
+@synthesize sectionSelected = _sectionSelected;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +32,7 @@
   
     [self.event checkData];
     join = false;
+    notInterested = false;
     //self.eventDetailTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -118,7 +122,10 @@
             cell.information.text = self.event.infomation;
             
             cell.joinButton.tag = indexPath.row;
+            cell.notJoinButton.tag = indexPath.row;
             [cell.joinButton addTarget:self action:@selector(addCheckedMark:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.notJoinButton addTarget:self action:@selector(addNotInterested:) forControlEvents:UIControlEventTouchUpInside];
+            
             if (join) {
                 cell.notJoinButton.hidden = true;
             }
@@ -151,17 +158,20 @@
 
 - (void)addCheckedMark:(id)sender
 {
-    if(join){
-        join = false;
-    }else{
-        join = true;
-    }
+    join = true;
     
     NSLog(@"join check");
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [self.delegate addCheckPoint:self didFinishPressedButton:join];
+    
+    [self.delegate addCheckPoint:self didFinishPressedButton:join andRow:self.rowSelected andSection:self.sectionSelected];
+}
+
+- (void)addNotInterested:(id)sender
+{
+    notInterested = true;
+    [self.delegate addNotInterested:self didFinishPressedButtonNotInterest:notInterested];
 }
 /*
 // Override to support conditional editing of the table view.

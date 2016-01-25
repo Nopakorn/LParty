@@ -13,7 +13,9 @@
 
 @protocol EventDetailViewControllerDelegate <NSObject>
 
-- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean )join;
+- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean )join andRow:(NSInteger )rowSelected andSection:(NSInteger )sectionSelected;
+
+- (void)addNotInterested:(EventDetailTableViewController *)controller didFinishPressedButtonNotInterest:(Boolean )interested;
 
 @end
 
@@ -21,9 +23,13 @@
 
 @property (nonatomic, weak) id <EventDetailViewControllerDelegate> delegate;
 @property (strong, nonatomic) Event *event;
-@property(weak, nonatomic) IBOutlet UITableView *eventDetailTableView;
+@property (weak, nonatomic) IBOutlet UITableView *eventDetailTableView;
+@property (nonatomic) NSInteger rowSelected;
+@property (nonatomic) NSInteger sectionSelected;
+@property (nonatomic) NSMutableArray *checkerList;
 
 
 - (void)addCheckedMark:(id)sender;
+- (void)addNotInterested:(id)sender;
 
 @end

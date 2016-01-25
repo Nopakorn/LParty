@@ -45,6 +45,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="mTy-Rz-U1f" firstAttribute="trailing" secondItem="np5-SS-2zh" secondAttribute="trailingMargin" constant="-8" id="1Um-FA-iQr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="s1x-If-nNi" secondAttribute="trailing" constant="33" id="2bP-ax-T5Z"/>
                     <constraint firstItem="xfB-1i-0my" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="8" id="2gM-2h-a0M"/>
                     <constraint firstItem="s1x-If-nNi" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="6" id="74V-SY-J6Y"/>
                     <constraint firstItem="mTy-Rz-U1f" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="AGd-8O-wwO"/>
@@ -54,6 +55,7 @@
                     <constraint firstItem="mTy-Rz-U1f" firstAttribute="top" secondItem="np5-SS-2zh" secondAttribute="topMargin" constant="35" id="R8z-Nd-oA7"/>
                     <constraint firstItem="s1x-If-nNi" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="gX5-6f-21U"/>
                     <constraint firstAttribute="trailingMargin" secondItem="s1x-If-nNi" secondAttribute="trailing" constant="19" id="k5J-CH-JXp"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="mTy-Rz-U1f" secondAttribute="trailing" constant="33" id="qtn-fb-PdO"/>
                     <constraint firstItem="s1x-If-nNi" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="w20-0c-K3g"/>
                     <constraint firstItem="mTy-Rz-U1f" firstAttribute="leading" secondItem="xfB-1i-0my" secondAttribute="trailing" constant="8" id="zh4-g5-wbz"/>
                 </constraints>

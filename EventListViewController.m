@@ -17,6 +17,7 @@
     if(self = [super init])
     {
         self.checker = false;
+        
     }
     return self;
 }
@@ -25,6 +26,7 @@
 {
 //    [self.navigationController setNavigationBarHidden:NO];
     self.eventList = [[NSMutableArray alloc] initWithCapacity:10];
+    self.checkerList = [[NSMutableArray alloc]initWithCapacity:10];
     [self createEventData];
     
     self.eventListTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -67,7 +69,20 @@
     cell.host.text = hostDetail;
     cell.title.text = eventObj.name;
     cell.time.text = eventObj.time;
-    if (self.checker) {
+//    if (self.checker && self.rowSelected == indexPath.row && self.sectionSelected == indexPath.section) {
+//        cell.imageChecker.hidden = false;
+//        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//    }else{
+//        cell.imageChecker.hidden = true;
+//    }
+//    NSString *checkString = (NSString *)self.checkerList[indexPath.section][indexPath.row];
+//    if ([checkString isEqualToString:@"true"]) {
+//        cell.imageChecker.hidden = false;
+//    }else{
+//        cell.imageChecker.hidden = true;
+//    }
+    if(self.checker && self.rowSelected == indexPath.row && self.sectionSelected == indexPath.section)
+    {
         cell.imageChecker.hidden = false;
     }else{
         cell.imageChecker.hidden = true;
@@ -88,12 +103,16 @@
     {
         EventDetailTableViewController *dest = [segue destinationViewController];
         dest.event = self.eventSelected;
+        dest.rowSelected = self.rowSelected;
+        dest.sectionSelected = self.sectionSelected;
         dest.delegate = self;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.rowSelected = indexPath.row;
+    self.sectionSelected = indexPath.section;
     self.eventSelected = [self.eventList objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"showInformation" sender:self];
     [self.eventListTableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -114,16 +133,32 @@
         self.event = [[Event alloc] initWithHost:self.host nameEvent:[self.eventNameList objectAtIndex:i]andAmoutOfMember:10];
         [self.eventList addObject:self.event];
     }
+    //create checker list
+//    for(int i = 0; i < [dateSectionTitles count]; i++){
+//        for (int j = 0; j < [self.eventNameList count]; j++) {
+//            self.checkerList[i][j] = @"false";
+//        }
+//    }
     
     for (Event* x in self.eventList) {
         [x checkData];
     }
     
 }
-- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean)join
+- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean)join andRow:(NSInteger)rowSelected andSection:(NSInteger)sectionSelected
 {
     self.checker = join;
+//    if(join){
+//        self.checkerList[sectionSelected][rowSelected] = @"true";
+//    }else{
+//        self.checkerList[sectionSelected][rowSelected] = @"false";
+//
+//    }
     [self.tableView reloadData];
+}
+- (void)addNotInterested:(EventDetailTableViewController *)controller didFinishPressedButtonNotInterest:(Boolean)interested
+{
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
