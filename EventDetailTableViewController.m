@@ -23,8 +23,8 @@
 @implementation EventDetailTableViewController
 
 @synthesize delegate = _delegate;
-@synthesize rowSelected = _rowSelected;
-@synthesize sectionSelected = _sectionSelected;
+//@synthesize sectionEvent = _sectionEvent;
+//@synthesize event = _event;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,14 +33,6 @@
     [self.event checkData];
     join = false;
     notInterested = false;
-    //self.eventDetailTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -159,13 +151,13 @@
 - (void)addCheckedMark:(id)sender
 {
     join = true;
+    self.event.checkMark = YES;
     
-    NSLog(@"join check");
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     
-    [self.delegate addCheckPoint:self didFinishPressedButton:join andRow:self.rowSelected andSection:self.sectionSelected];
+    [self.delegate addCheckPoint:self atSection:self.sectionEvent andAtEvent:self.event];
 }
 
 - (void)addNotInterested:(id)sender

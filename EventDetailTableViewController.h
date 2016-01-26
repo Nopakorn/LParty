@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "SectionEvent.h"
 
 @class EventDetailTableViewController;
 
 @protocol EventDetailViewControllerDelegate <NSObject>
 
-- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean )join andRow:(NSInteger )rowSelected andSection:(NSInteger )sectionSelected;
+- (void)addCheckPoint:(EventDetailTableViewController *)controller atSection:(SectionEvent *)sectionEvent andAtEvent:(Event *)event;
 
 - (void)addNotInterested:(EventDetailTableViewController *)controller didFinishPressedButtonNotInterest:(Boolean )interested;
 
@@ -23,6 +24,7 @@
 
 @property (nonatomic, weak) id <EventDetailViewControllerDelegate> delegate;
 @property (strong, nonatomic) Event *event;
+@property (strong, nonatomic) SectionEvent *sectionEvent;
 @property (weak, nonatomic) IBOutlet UITableView *eventDetailTableView;
 @property (nonatomic) NSInteger rowSelected;
 @property (nonatomic) NSInteger sectionSelected;

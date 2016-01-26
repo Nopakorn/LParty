@@ -16,6 +16,7 @@
 {
     if(self = [super init]){
         //will change later
+        self.checkMark = NO;
         self.host = host;
         self.name = name;
         amountOfMember = memberCount;

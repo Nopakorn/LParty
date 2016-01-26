@@ -14,9 +14,12 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic) NSMutableArray *eventList;
+@property (strong, nonatomic) Event *event;
 
 - (id)initWithEventList:(NSMutableArray *)eventList andDate:(NSString *)date;
 - (id)initWithDate:(NSString *)date;
-- (void)addEvent:(Event *)event inDate:(NSString *)date;
+- (void)addEvent:(Event *)event;
+- (void)checkData;
+- (NSMutableArray *)getEventList;
 
 @end

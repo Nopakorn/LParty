@@ -19,10 +19,10 @@
     NSArray *dateSectionTitles;
 }
 @property (nonatomic) NSMutableArray *eventNameList;
-@property (nonatomic) NSMutableArray *eventDate;
-@property (nonatomic) NSMutableArray *eventLocation;
 @property (nonatomic) NSMutableArray *eventHostDetailList;
 @property (nonatomic) NSMutableArray *checkerList;
+@property (nonatomic, retain) NSMutableArray *sectionList;
+@property (nonatomic, retain) NSMutableArray *eventList;
 @property (nonatomic) Boolean checker;
 
 @property (nonatomic) NSInteger rowSelected;
@@ -33,7 +33,7 @@
 @property (strong, nonatomic) Host *host;
 @property (strong, nonatomic) Member *member;
 @property (strong, nonatomic) SectionEvent *sectionEvent;
-@property (nonatomic, retain) NSMutableArray *eventList;
+
 
 @property(weak, nonatomic) IBOutlet UITableView *eventListTableView;
 

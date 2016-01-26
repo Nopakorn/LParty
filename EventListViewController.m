@@ -11,7 +11,9 @@
 #import "EventListCell.h"
 
 @implementation EventListViewController
-
+{
+    NSString *dateSection;
+}
 - (id)init
 {
     if(self = [super init])
@@ -26,7 +28,9 @@
 {
 //    [self.navigationController setNavigationBarHidden:NO];
     self.eventList = [[NSMutableArray alloc] initWithCapacity:10];
+    self.sectionList = [[NSMutableArray alloc] initWithCapacity:10];
     self.checkerList = [[NSMutableArray alloc]initWithCapacity:10];
+    dateSection = nil;
     [self createEventData];
     
     self.eventListTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -36,25 +40,26 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [dateSectionTitles count];
+       return [self.sectionList count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    
-    return [dateSectionTitles objectAtIndex:section];
+    SectionEvent *sectionObj = [self.sectionList objectAtIndex:section];
+    NSString *titleSection = sectionObj.date;
+    return titleSection;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    NSString *sectionTitle = [dateSectionTitles objectAtIndex:section];
-//    NSArray *listEvent = [calendar objectForKey:sectionTitle];
-//    return [listEvent count];
-    return [self.eventList count];
+    SectionEvent *sectionObj = [self.sectionList objectAtIndex:section];
+    NSArray *sectionEventList = [sectionObj getEventList];
+    return [sectionEventList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     static NSString *simpleTableIdentifier = @"EventListCustomCell";
     EventListCell *cell = (EventListCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
@@ -63,26 +68,18 @@
         cell = [nib objectAtIndex:0];
     }
     
-    Event *eventObj = [self.eventList objectAtIndex:indexPath.row];
+    SectionEvent *sectionObj = [self.sectionList objectAtIndex:indexPath.section];
+    NSArray *sectionIndex = [sectionObj getEventList];
+    Event *eventObj = [sectionIndex objectAtIndex:indexPath.row];
     NSString *hostDetail = [NSString stringWithFormat:@"by %@",eventObj.host.name];
     
     cell.host.text = hostDetail;
     cell.title.text = eventObj.name;
     cell.time.text = eventObj.time;
-//    if (self.checker && self.rowSelected == indexPath.row && self.sectionSelected == indexPath.section) {
-//        cell.imageChecker.hidden = false;
-//        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//    }else{
-//        cell.imageChecker.hidden = true;
-//    }
-//    NSString *checkString = (NSString *)self.checkerList[indexPath.section][indexPath.row];
-//    if ([checkString isEqualToString:@"true"]) {
-//        cell.imageChecker.hidden = false;
-//    }else{
-//        cell.imageChecker.hidden = true;
-//    }
-    if(self.checker && self.rowSelected == indexPath.row && self.sectionSelected == indexPath.section)
+
+    if(eventObj.checkMark == YES)
     {
+        
         cell.imageChecker.hidden = false;
     }else{
         cell.imageChecker.hidden = true;
@@ -102,18 +99,21 @@
     if([[segue identifier]isEqualToString:@"showInformation" ])
     {
         EventDetailTableViewController *dest = [segue destinationViewController];
+        dest.sectionEvent = self.sectionEvent;
         dest.event = self.eventSelected;
-        dest.rowSelected = self.rowSelected;
-        dest.sectionSelected = self.sectionSelected;
         dest.delegate = self;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.rowSelected = indexPath.row;
-    self.sectionSelected = indexPath.section;
-    self.eventSelected = [self.eventList objectAtIndex:indexPath.row];
+    
+    SectionEvent *sectionObj = [self.sectionList objectAtIndex:indexPath.section];
+    Event *eventObj = [[sectionObj getEventList] objectAtIndex:indexPath.row];
+    
+    self.sectionEvent = sectionObj;
+    self.eventSelected = eventObj;
+    
     [self performSegueWithIdentifier:@"showInformation" sender:self];
     [self.eventListTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -124,38 +124,115 @@
     //crate calendar here
   
     dateSectionTitles = [[NSArray alloc] initWithObjects:@"Monday, Jan 11", @"Tuesday, Jan 12",  @"Wednesday, Jan 13", @"Thursday, Jan 14", @"Friday, Jan 15", nil];
-    
     self.eventNameList = [[NSMutableArray alloc] initWithObjects:@"We Talk and Drink", @"Drink only", @"Dance with girl", @"For men only", @"Drink a tea", @"Beyound The submit", @"Lady night",@"Drink with Dev", nil];
     self.eventHostDetailList = [[NSMutableArray alloc] initWithObjects:@"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@inthebox", @"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@mimemo", nil];
+    
+    NSMutableArray *eventNameList_2 = [[NSMutableArray alloc] initWithObjects:@"WeTEST", @"sfds", @"wer girl", @"ggegad", @"wef", nil];
+    NSMutableArray *eventHostDetailList_2 = [[NSMutableArray alloc] initWithObjects:@"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@inthebox", @"@Bar21",nil];
+   
     
     for (int i = 0; i < [self.eventHostDetailList count]; i++) {
         self.host = [[Host alloc] initWithName:[self.eventHostDetailList objectAtIndex:i] andDetail:nil];
         self.event = [[Event alloc] initWithHost:self.host nameEvent:[self.eventNameList objectAtIndex:i]andAmoutOfMember:10];
         [self.eventList addObject:self.event];
+        
     }
-    //create checker list
-//    for(int i = 0; i < [dateSectionTitles count]; i++){
-//        for (int j = 0; j < [self.eventNameList count]; j++) {
-//            self.checkerList[i][j] = @"false";
-//        }
-//    }
     
-    for (Event* x in self.eventList) {
+    NSMutableArray *eventList_2 = [[NSMutableArray alloc] initWithCapacity:10];
+    for(int i = 0 ; i<[eventNameList_2 count]; i++){
+        
+        self.host = [[Host alloc] initWithName:[eventHostDetailList_2 objectAtIndex:i] andDetail:nil];
+        self.event = [[Event alloc] initWithHost:self.host nameEvent:[eventNameList_2 objectAtIndex:i]andAmoutOfMember:10];
+        
+        [eventList_2 addObject:self.event];
+    }
+    
+    NSMutableArray *eventList_3 = [[NSMutableArray alloc] initWithCapacity:10];
+    for(int i = 0 ; i<[eventNameList_2 count]; i++){
+        
+        self.host = [[Host alloc] initWithName:[eventHostDetailList_2 objectAtIndex:i] andDetail:nil];
+        self.event = [[Event alloc] initWithHost:self.host nameEvent:[eventNameList_2 objectAtIndex:i]andAmoutOfMember:10];
+        
+        [eventList_3 addObject:self.event];
+    }
+    
+    NSMutableArray *eventList_4 = [[NSMutableArray alloc] initWithCapacity:10];
+    for(int i = 0 ; i<[eventNameList_2 count]; i++){
+        
+        self.host = [[Host alloc] initWithName:[eventHostDetailList_2 objectAtIndex:i] andDetail:nil];
+        self.event = [[Event alloc] initWithHost:self.host nameEvent:[eventNameList_2 objectAtIndex:i]andAmoutOfMember:10];
+        
+        [eventList_4 addObject:self.event];
+    }
+    
+    NSMutableArray *eventList_5 = [[NSMutableArray alloc] initWithCapacity:10];
+    for(int i = 0 ; i<[eventNameList_2 count]; i++){
+        
+        self.host = [[Host alloc] initWithName:[eventHostDetailList_2 objectAtIndex:i] andDetail:nil];
+        self.event = [[Event alloc] initWithHost:self.host nameEvent:[eventNameList_2 objectAtIndex:i]andAmoutOfMember:10];
+        
+        [eventList_5 addObject:self.event];
+    }
+    
+    
+    
+    for(int i = 0; i < dateSectionTitles.count; i++){
+        if(i == 1){
+            self.sectionEvent = [[SectionEvent alloc] initWithEventList:eventList_2 andDate:[dateSectionTitles objectAtIndex:i]];
+            [self.sectionList addObject:self.sectionEvent];
+            continue;
+        }
+        if(i == 2){
+            self.sectionEvent = [[SectionEvent alloc] initWithEventList:eventList_3 andDate:[dateSectionTitles objectAtIndex:i]];
+            [self.sectionList addObject:self.sectionEvent];
+            continue;
+        }
+        if(i == 3){
+            self.sectionEvent = [[SectionEvent alloc] initWithEventList:eventList_3 andDate:[dateSectionTitles objectAtIndex:i]];
+            [self.sectionList addObject:self.sectionEvent];
+            continue;
+        }
+        if(i == 4){
+            self.sectionEvent = [[SectionEvent alloc] initWithEventList:eventList_4 andDate:[dateSectionTitles objectAtIndex:i]];
+            [self.sectionList addObject:self.sectionEvent];
+            continue;
+        }
+        
+        self.sectionEvent = [[SectionEvent alloc] initWithEventList:self.eventList andDate:[dateSectionTitles objectAtIndex:i]];
+        [self.sectionList addObject:self.sectionEvent];
+        
+    }
+    
+    for (Event* x in self.eventList){
         [x checkData];
     }
     
+    for (SectionEvent* x in self.sectionList){
+        [x checkData];
+    }
+
 }
-- (void)addCheckPoint:(EventDetailTableViewController *)controller didFinishPressedButton:(Boolean)join andRow:(NSInteger)rowSelected andSection:(NSInteger)sectionSelected
-{
-    self.checker = join;
-//    if(join){
-//        self.checkerList[sectionSelected][rowSelected] = @"true";
-//    }else{
-//        self.checkerList[sectionSelected][rowSelected] = @"false";
-//
+
+- (void)addCheckPoint:(EventDetailTableViewController *)controller atSection:(SectionEvent *)sectionEvent andAtEvent:(Event *)event{
+    
+    NSInteger secCount = 0;
+    NSInteger evCount = 0;
+    
+//    for (int i = 0; i < self.sectionList.count; i++) {
+//        SectionEvent *secEv = [self.sectionList objectAtIndex:i];
+//        if ([secEv.date isEqualToString:sectionEvent.date]) {
+//            dateSection = secEv.date;
+//            NSLog(@"date? %@",secEv.date);
+//            [self.sectionList replaceObjectAtIndex:i withObject:sectionEvent];
+//            evCount+=1;
+//        }
+//        secCount+=1;
 //    }
+    NSLog(@"In section %ld in eventAT %ld",(long)secCount, (long)evCount);
+
     [self.tableView reloadData];
 }
+
 - (void)addNotInterested:(EventDetailTableViewController *)controller didFinishPressedButtonNotInterest:(Boolean)interested
 {
 

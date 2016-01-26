@@ -21,7 +21,7 @@
 @property (strong, nonatomic) Member *member;
 @property (nonatomic, retain) NSMutableArray *onGoing;
 @property (nonatomic, retain) NSMutableArray *notGoing;
-@property (nonatomic)BOOL *checkMark;
+@property (nonatomic)BOOL checkMark;
 
 - (id)initWithHost:(Host *)host nameEvent:(NSString *)name andAmoutOfMember:(NSInteger )memberCount;
 - (void)createDataSample;
