@@ -129,11 +129,17 @@
     
     NSMutableArray *eventNameList_2 = [[NSMutableArray alloc] initWithObjects:@"WeTEST", @"sfds", @"wer girl", @"ggegad", @"wef", nil];
     NSMutableArray *eventHostDetailList_2 = [[NSMutableArray alloc] initWithObjects:@"@Bar21", @"@sukhumvit77House", @"@BarJJ", @"@inthebox", @"@Bar21",nil];
+    NSMutableArray *memberGoing = [[NSMutableArray alloc] initWithObjects:@"John malvic", @"Clerk Welmel", @"Bill Gate", @"Artour Babeav", @"Nopakorn G",nil];
    
     
     for (int i = 0; i < [self.eventHostDetailList count]; i++) {
         self.host = [[Host alloc] initWithName:[self.eventHostDetailList objectAtIndex:i] andDetail:nil];
         self.event = [[Event alloc] initWithHost:self.host nameEvent:[self.eventNameList objectAtIndex:i]andAmoutOfMember:10];
+        for(int x = 0; x < [memberGoing count]; x++){
+            self.member = [[Member alloc] initWithName:[memberGoing objectAtIndex:x] andId:@"001234"];
+            [self.event addMemberOnGoing:self.member];
+        }
+        
         [self.eventList addObject:self.event];
         
     }

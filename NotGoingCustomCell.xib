@@ -3,18 +3,52 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ZFi-3x-ew4">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotGoingCustomCell" id="ZFi-3x-ew4" customClass="NotGoingCustomCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZFi-3x-ew4" id="fKC-uo-ixL">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rectangle.png" translatesAutoresizingMaskIntoConstraints="NO" id="huh-ZC-TsX">
+                        <rect key="frame" x="16" y="8" width="29" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="NEH-Cr-LqT"/>
+                            <constraint firstAttribute="width" constant="29" id="UEX-w1-cWQ"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jai-bi-vtq">
+                        <rect key="frame" x="53" y="11" width="259" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="259" id="8hv-LE-7ZR"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="huh-ZC-TsX" firstAttribute="leading" secondItem="fKC-uo-ixL" secondAttribute="leadingMargin" constant="8" id="6Wg-O4-8lm"/>
+                    <constraint firstItem="Jai-bi-vtq" firstAttribute="leading" secondItem="huh-ZC-TsX" secondAttribute="trailing" constant="8" id="DwU-So-PLy"/>
+                    <constraint firstItem="Jai-bi-vtq" firstAttribute="leading" secondItem="huh-ZC-TsX" secondAttribute="trailing" constant="8" id="KH5-xd-bxn"/>
+                    <constraint firstItem="Jai-bi-vtq" firstAttribute="top" secondItem="fKC-uo-ixL" secondAttribute="topMargin" constant="3" id="Vfq-am-DxJ"/>
+                    <constraint firstItem="Jai-bi-vtq" firstAttribute="trailing" secondItem="fKC-uo-ixL" secondAttribute="trailingMargin" id="eUD-FD-TbA"/>
+                    <constraint firstItem="huh-ZC-TsX" firstAttribute="top" secondItem="fKC-uo-ixL" secondAttribute="topMargin" id="pvf-sl-Pr7"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="imageProfile" destination="huh-ZC-TsX" id="zHP-o4-D6J"/>
+                <outlet property="name" destination="Jai-bi-vtq" id="WWR-6L-xtf"/>
+            </connections>
             <point key="canvasLocation" x="319" y="172"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Rectangle.png" width="29" height="30"/>
+    </resources>
 </document>

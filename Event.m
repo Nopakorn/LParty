@@ -21,6 +21,7 @@
         self.name = name;
         amountOfMember = memberCount;
         self.onGoing = [NSMutableArray arrayWithCapacity:amountOfMember];
+        self.notGoing = [NSMutableArray arrayWithCapacity:10];
     }
     [self createDataSample];
     return self;
@@ -42,6 +43,16 @@
 - (void)addMemberNotGoing:(Member *)member
 {
     [self.notGoing addObject:member];
+}
+
+- (NSMutableArray *)getMemberOnGoing
+{
+    return self.onGoing;
+}
+
+- (NSMutableArray *)getMemberNotGoing
+{
+    return self.notGoing;
 }
 
 - (void)checkData

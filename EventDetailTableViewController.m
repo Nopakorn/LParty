@@ -11,7 +11,8 @@
 #import "DateTimeCustomCell.h"
 #import "ImageViewCustomCell.h"
 #import "MapInfoCustomCell.h"
-//#import "GoingCustomCell.h"
+#import "GoingCustomCell.h"
+#import "NotGoingCustomCell.h"
 
 @interface EventDetailTableViewController ()
 {
@@ -33,6 +34,7 @@
     [self.event checkData];
     join = false;
     notInterested = false;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,14 +44,31 @@
 
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Incomplete implementation, return the number of sections
-//    return 0;
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 3;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSArray *titleForHeader = [[NSArray alloc] initWithObjects:@"Going", @"Not Going", nil];
+    if (section == 0) {
+        return nil;
+    }else{
+        return [titleForHeader objectAtIndex:section-1];
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 4;
+    if(section == 1){
+        NSLog(@"ON GOING COUNT = %ul",[[self.event getMemberOnGoing] count]);
+        return [[self.event getMemberOnGoing] count];
+    }else if(section == 2){
+        return [[self.event getMemberNotGoing] count];
+    }else{
+        return 4;
+    }
 }
 
 
@@ -58,100 +77,128 @@
     static NSString *cellIdentifier = @"Cell";
     UITableViewCell *returnCell;
     
-    switch (indexPath.row) {
-        case 0:
-        {
-            cellIdentifier = @"ImageViewCustomCell";
-            ImageViewCustomCell *cell = (ImageViewCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if(cell == nil){
-                NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"ImageViewCustomCell" owner:self options:nil];
-                cell = [nib objectAtIndex:0];
+    if(indexPath.section == 0){
+        
+        switch (indexPath.row) {
+            case 0:
+            {
+                cellIdentifier = @"ImageViewCustomCell";
+                ImageViewCustomCell *cell = (ImageViewCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if(cell == nil){
+                    NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"ImageViewCustomCell" owner:self options:nil];
+                    cell = [nib objectAtIndex:0];
+                }
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.title.text = self.event.name;
+                returnCell = cell;
             }
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.title.text = self.event.name;
-            returnCell = cell;
+                break;
+            case 1:
+            {
+                cellIdentifier = @"DateTimeCustomCell";
+                DateTimeCustomCell *cell = (DateTimeCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if(cell == nil){
+                    NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"DateTimeCustomCell" owner:self options:nil];
+                    cell = [nib objectAtIndex:0];
+                }
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.time.text = self.event.time;
+                cell.date.text = self.event.date;
+                
+                returnCell = cell;
+            }
+                break;
+            case 2:
+            {
+                cellIdentifier = @"MapInfoCustomCell";
+                MapInfoCustomCell *cell = (MapInfoCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if(cell == nil){
+                    NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"MapInfoCustomCell" owner:self options:nil];
+                    cell = [nib objectAtIndex:0];
+                }
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.host.text = self.event.host.name;
+                cell.locationDetail.text = self.event.location;
+                
+                returnCell = cell;
+            }
+                break;
+            case 3:
+            {
+                cellIdentifier = @"InfoCustomCell";
+                InfoCustomCell *cell = (InfoCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if(cell == nil){
+                    NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"InfoCustomCell" owner:self options:nil];
+                    cell = [nib objectAtIndex:0];
+                }
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.information.text = self.event.infomation;
+                
+                cell.joinButton.tag = indexPath.row;
+                cell.notJoinButton.tag = indexPath.row;
+                [cell.joinButton addTarget:self action:@selector(addCheckedMark:) forControlEvents:UIControlEventTouchUpInside];
+                [cell.notJoinButton addTarget:self action:@selector(addNotInterested:) forControlEvents:UIControlEventTouchUpInside];
+                
+                if (join) {
+                    cell.notJoinButton.hidden = true;
+                }
+                returnCell = cell;
+            }
+                break;
         }
-            break;
-        case 1:
-        {
-            cellIdentifier = @"DateTimeCustomCell";
-            DateTimeCustomCell *cell = (DateTimeCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if(cell == nil){
-                NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"DateTimeCustomCell" owner:self options:nil];
-                cell = [nib objectAtIndex:0];
-            }
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.time.text = self.event.time;
-            cell.date.text = self.event.date;
-            
-            returnCell = cell;
+    
+    }else if(indexPath.section == 1){
+        cellIdentifier = @"GoingCustomCell";
+        GoingCustomCell *cell = (GoingCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if(cell == nil){
+            NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"GoingCustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
         }
-            break;
-        case 2:
-        {
-            cellIdentifier = @"MapInfoCustomCell";
-            MapInfoCustomCell *cell = (MapInfoCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if(cell == nil){
-                NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"MapInfoCustomCell" owner:self options:nil];
-                cell = [nib objectAtIndex:0];
-            }
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.host.text = self.event.host.name;
-            cell.locationDetail.text = self.event.location;
-            
-            returnCell = cell;
-        }
-            break;
-        case 3:
-        {
-            cellIdentifier = @"InfoCustomCell";
-            InfoCustomCell *cell = (InfoCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if(cell == nil){
-                NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"InfoCustomCell" owner:self options:nil];
-                cell = [nib objectAtIndex:0];
-            }
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.information.text = self.event.infomation;
-            
-            cell.joinButton.tag = indexPath.row;
-            cell.notJoinButton.tag = indexPath.row;
-            [cell.joinButton addTarget:self action:@selector(addCheckedMark:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.notJoinButton addTarget:self action:@selector(addNotInterested:) forControlEvents:UIControlEventTouchUpInside];
-            
-            if (join) {
-                cell.notJoinButton.hidden = true;
-            }
-            returnCell = cell;
-        }
-            break;
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        Member *memberObj = [[self.event getMemberOnGoing] objectAtIndex:indexPath.row];
+        //cell.name.text = [[self.event getMemberOnGoing] objectAtIndex:indexPath.row];
+        cell.name.text = memberObj.name;
+        returnCell = cell;
     }
+    
     return returnCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        
-        return 178;
-        
-    }else if(indexPath.row == 3){
-//        if(join){
-//            return 248-50;
-//        }else{
-//            return 248;
-//        }
-        return 248;
-    
-    }else{
-        
-        return 70;
-    }
+    float height = 0.0;
+    switch (indexPath.section) {
+        case 0:
+            if (indexPath.row == 0) {
+                height = 178;
+            }else if(indexPath.row == 3){
+                height = 248;
+            }else{
+                height = 70.0;
+            }
+            break;
+            
+        case 1:
+            height = 44;
+            
+        case 2:
+            height = 44;
+
+    }    
+    return height;
 }
 
 - (void)addCheckedMark:(id)sender
 {
-    join = true;
-    self.event.checkMark = YES;
+    //manual canceling
+    if(join){
+        join = false;
+        self.event.checkMark = NO;
+    }else{
+        join = true;
+        self.event.checkMark = YES;
+    }
+    
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];

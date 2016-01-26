@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 #import "SectionEvent.h"
+#import "Member.h"
+#import "Host.h"
 
 @class EventDetailTableViewController;
 
@@ -24,6 +26,8 @@
 
 @property (nonatomic, weak) id <EventDetailViewControllerDelegate> delegate;
 @property (strong, nonatomic) Event *event;
+@property (strong, nonatomic) Host *host;
+@property (strong, nonatomic) Member *member;
 @property (strong, nonatomic) SectionEvent *sectionEvent;
 @property (weak, nonatomic) IBOutlet UITableView *eventDetailTableView;
 @property (nonatomic) NSInteger rowSelected;

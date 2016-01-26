@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Ayq-m9-Kjh">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GoingCustomCell" id="Ayq-m9-Kjh" customClass="GoingCustomCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ayq-m9-Kjh" id="gQ8-oe-spM">
@@ -40,6 +40,10 @@
                     <constraint firstItem="ogI-O3-4Dt" firstAttribute="top" secondItem="gQ8-oe-spM" secondAttribute="topMargin" constant="3" id="oyJ-Vx-lxR"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="imageProfile" destination="m6t-HY-xDE" id="OeS-NX-q5z"/>
+                <outlet property="name" destination="ogI-O3-4Dt" id="HZx-gF-1Ck"/>
+            </connections>
             <point key="canvasLocation" x="296" y="204"/>
         </tableViewCell>
     </objects>
