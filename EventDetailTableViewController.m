@@ -62,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if(section == 1){
-        NSLog(@"ON GOING COUNT = %ul",[[self.event getMemberOnGoing] count]);
+        NSLog(@"ON GOING COUNT = %lul",(unsigned long)[[self.event getMemberOnGoing] count]);
         return [[self.event getMemberOnGoing] count];
     }else if(section == 2){
         return [[self.event getMemberNotGoing] count];
@@ -154,9 +154,22 @@
             NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"GoingCustomCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
+        
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         Member *memberObj = [[self.event getMemberOnGoing] objectAtIndex:indexPath.row];
-        //cell.name.text = [[self.event getMemberOnGoing] objectAtIndex:indexPath.row];
+        cell.name.text = memberObj.name;
+        returnCell = cell;
+        
+    }else if(indexPath.section == 2){
+        cellIdentifier = @"NotGoingCustomCell";
+        NotGoingCustomCell *cell = (NotGoingCustomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if(cell == nil){
+            NSArray *nib =[[NSBundle mainBundle] loadNibNamed:@"NotGoingCustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+        }
+        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        Member *memberObj = [[self.event getMemberNotGoing] objectAtIndex:indexPath.row];
         cell.name.text = memberObj.name;
         returnCell = cell;
     }
